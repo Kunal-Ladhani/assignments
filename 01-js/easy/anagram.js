@@ -5,6 +5,29 @@
 */
 
 function isAnagram(str1, str2) {
+  const mapObj = {};
+
+  for (let i = 0; i < str1.length; i++) {
+    if (!mapObj[str1[i].toLowerCase()]) {
+      mapObj[str1[i].toLowerCase()] = 0;
+    }
+    mapObj[str1[i].toLowerCase()] += 1;
+  }
+
+  for (let i = 0; i < str2.length; i++) {
+    if (!mapObj[str2[i].toLowerCase()]) {
+      return false;
+    }
+    mapObj[str2[i].toLowerCase()] -= 1;
+  }
+
+  for (letter in mapObj) {
+    if (mapObj[letter] !== 0) {
+      return false;
+    }
+  }
+
+  return true;
 
 }
 
