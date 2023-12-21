@@ -39,11 +39,61 @@
 
   Testing the server - run `npm run test-todoServer` command in terminal
  */
-  const express = require('express');
-  const bodyParser = require('body-parser');
-  
-  const app = express();
-  
-  app.use(bodyParser.json());
-  
-  module.exports = app;
+const express = require('express');
+const bodyParser = require('body-parser');
+const fs = require('node:fs');
+
+const app = express();
+
+app.use(bodyParser.json());
+
+
+const PORT = process.env.PORT || 3000;
+
+let fileData;
+fs.readFile('./files/todos.json', (err, data) => {
+  if (err) {
+    console.log('failed to read file');
+  }
+  fileData = JSON.parse(data.toString());
+  console.log(`opened file for writing todos with data - \n${JSON.stringify(fileData)}`);
+});
+
+app.use( (req, res, next) => {
+  const errObj = { error: 'Path not found' };
+  res
+    .header('Content-Type', 'application/json')
+    .status(404)
+    .json(errObj);
+});
+
+app.get('/todos', (req, res, next) => {
+  res
+    .status(200)
+    .send(fileData.todos);
+  next();
+});
+
+app.get('/todos/:id', (req, res, next) => {
+  req.params;
+  next();
+});
+
+app.post('/todos', (req, res, next) => {
+  next();
+});
+
+app.put('/todos/:id', (req, res, next) => {
+  next();
+});
+
+app.delete('/todos/:id', (req, res, next) => {
+  next();
+});
+
+app.listen(PORT, () => {
+  console.log(`listening on PORT - ${PORT}`);
+  console.log(`hostname = http://localhost:${PORT}/`);
+});
+
+module.exports = app;
