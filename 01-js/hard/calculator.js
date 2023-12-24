@@ -18,24 +18,24 @@
 
 class Calculator {
   result;
-  constructor(result) {
-    result = 0;
+  constructor() {
+    this.result = 0;
   }
 
   add(n) {
-    this.result += n;
+    this.result = this.result + n;
   }
   subtract(n) {
-    this.result -= n;
+    this.result = this.result - n;
   }
   multiply(n) {
-    this.result *= n;
+    this.result = this.result * n;
   }
   divide(n) {
     if (n === 0) {
       throw new Error('Cannot divide by 0');
     }
-    this.result /= n;
+    this.result = this.result / n;
   }
   clear() {
     this.result = 0;
@@ -43,17 +43,16 @@ class Calculator {
   getResult() {
     return this.result;
   }
-  calculate() {
-    // input: `10 +   2 *    (   6 - (4 + 1) / 2) + 7`
+  calculate(expression) {
     const sanitizedExpression = expression.replace(/\s+/g, '').replace(/[^0-9+\-*/().]/g, '');
 
     try {
       this.result = eval(sanitizedExpression);
-      
+
       if (!isFinite(this.result)) {
         throw new Error("Invalid result");
       }
-      
+
     } catch (error) {
       throw new Error("Invalid expression");
     }
