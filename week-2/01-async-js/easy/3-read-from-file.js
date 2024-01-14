@@ -1,11 +1,15 @@
 const fs = require('fs');
+// nodejs library that is giving APIs for file system.
 
 /* ------------ this is sync operation ----------- */
 
 const expensiveOps = (n) => {
-    for (let i = 0; i < n; i++) {
-        console.log(i);
+    let startTime = new Date()
+    var sum = 0;
+    for (let i = 0; i < n;) {
+        sum += i++;
     }
+    console.log(sum);
 }
 
 // const fileContent = fs.readFileSync('./hello.txt');
@@ -20,24 +24,32 @@ const expensiveOps = (n) => {
 // const hello = fs.readFileSync(`./hello.txt`, { encoding: "utf-8" });
 // console.log(hello);
 
-const input = "You wrote this line into the input file with Node.js...";
+// const input = "You wrote this line into the input file with NodeJS";
 
-fs.writeFile('./hello.txt', input, (err) => {
-    if (err) {
-        console.log("Failed to write file");
-    }
-    console.log("Successfully written.");
-});
+// fs.writeFile('./hello.txt', input, (err) => {
+//     if (err) {
+//         console.log("Failed to write file");
+//     }
+//     console.log("Successfully written.");
+// });
 
-console.log("Files will be read and written into.");
+// console.log("Files will be read and written into.");
 
-expensiveOps(1000000);
+// expensiveOps(1000000);
 
-fs.readFile('./hello.txt', 'utf-8', (err, data) => {
-    if (err) {
-        console.log('failed to read file');
-    }
+// this is a async fn so hey there will be printed first, as it will take some time to read from the file.
+fs.readFile('easy/hello.txt', 'utf-8', function (err, data) {
+    // these are called error first callback
+    // if (err) {
+    //     console.log('failed to read file');
+    // }
     console.log(data);
 });
+
+console.log('Hey, there! #1');
+
+expensiveOps(3000000000);
+
+console.log('Hey, there! #2');
 
 
