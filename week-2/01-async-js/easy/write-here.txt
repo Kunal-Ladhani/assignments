@@ -1,0 +1,2 @@
+Hello Node.js
+ line into the input file with NodeJS

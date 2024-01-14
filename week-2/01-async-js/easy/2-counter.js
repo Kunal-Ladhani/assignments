@@ -1,14 +1,13 @@
 // jab tak timeout print kare tab tak while aage badh jata hai
 
 const counter = (count = 1, timeInterval = 1000) => {
-    let flag = false;
-    while (flag === false) {
-        flag = true;
-        setTimeout(() => {
-            console.log(`Counter -> ${count++}`);
-            flag = false;
-        }, timeInterval);
-    }
+	let i = 0;
+	while (i < 10) {
+		setTimeout(() => {
+			console.log(`Counter -> ${count++}`);
+			i++;
+		}, timeInterval);
+	}
 };
 
-counter(1, 1000);
+counter();
