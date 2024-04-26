@@ -8,7 +8,7 @@ describe('API Endpoints', () => {
 
   beforeAll((done) => {
     if (globalServer) {
-        globalServer.close();
+      globalServer.close();
     }
     globalServer = server.listen(3000);
     done()
@@ -20,10 +20,10 @@ describe('API Endpoints', () => {
 
   describe('GET /files', () => {
     test('should return a list of files', async () => {
-        const options = {
-          method: 'GET',
-          path: '/files'
-        };
+      const options = {
+        method: 'GET',
+        path: '/files'
+      };
       const response = await sendRequest(options);
 
       expect(response.statusCode).toBe(200);
@@ -65,7 +65,7 @@ describe('API Endpoints', () => {
     test('should serve the requested file', async () => {
       const options = {
         method: 'GET',
-        path: '/file/test-file.txt'
+        path: '/files/test-file.txt'
       };
       const response = await sendRequest(options);
 
@@ -76,7 +76,7 @@ describe('API Endpoints', () => {
     test('should handle file not found', async () => {
       const options = {
         method: 'GET',
-        path: '/file/non-existing-file.txt'
+        path: '/files/non-existing-file.txt'
       };
       const response = await sendRequest(options);
 
