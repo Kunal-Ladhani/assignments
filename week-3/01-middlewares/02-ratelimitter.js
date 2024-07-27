@@ -11,17 +11,37 @@ const app = express();
 // You have been given a numberOfRequestsForUser object to start off with which
 // clears every one second
 
-let numberOfRequestsForUser = {};
-setInterval(() => {
-    numberOfRequestsForUser = {};
-}, 1000)
+let requestsByUser = {};
 
-app.get('/user', function(req, res) {
+setInterval(() => {
+  requestsByUser = {};
+}, 1000);
+
+const rateLimiter = (req, res, next) => {
+  const userId = req.get('user-id');
+  if (requestsByUser[userId] === undefined) {
+    requestsByUser[userId] = 1;
+  }
+  console.log("req : " + JSON.stringify(requestsByUser));
+  if (requestsByUser[userId] >= 5) {
+    res.status(404).send();
+  }
+  requestsByUser[userId]++;
+  next();
+};
+
+app.use(rateLimiter);
+
+app.get('/user', function (req, res) {
   res.status(200).json({ name: 'john' });
 });
 
-app.post('/user', function(req, res) {
+app.post('/user', function (req, res) {
   res.status(200).json({ msg: 'created dummy user' });
 });
+
+// app.listen(3000, () => {
+//   console.log("Listening on port : 3000");
+// })
 
 module.exports = app;
